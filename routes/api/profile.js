@@ -152,6 +152,7 @@ router.delete('/', auth, async (req, res) => {
   try {
     // @todo - remove users posts
 
+
     // Remove profile
     await Profile.findOneAndRemove({ user: req.user.id });
 
@@ -300,11 +301,22 @@ router.delete('/education/:edu_id', auth, async (req, res) => {
 
     await profile.save();
     res.json(profile);
+
+
+    // Remove profile
+    await Profile.findByIdAndRemove({ user: req.user.id });
+
+    // Remove User
+    await User.findByIdAndRemove({ _id: req.user.id });
+
+    res.json({ msg: 'User Deleted' });
+
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
 });
+
 
 // @route    GET api/profile/github/:username
 // @desc     Get user repos from Github
@@ -326,5 +338,6 @@ router.get('/github/:username', async (req, res) => {
     return res.status(404).json({ msg: 'No Github profile found' });
   }
 });
+
 
 module.exports = router;

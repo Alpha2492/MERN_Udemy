@@ -1,6 +1,5 @@
 node_modules/
 Cpy_devconnector_html_theme/
-config/production.json
 config/default.json
 client/build
 client/.eslintcache
